@@ -1,0 +1,24 @@
+db.people.insertOne({"first_name":"Bob","last_name":"Seger","email":"bobSeger@gmail.com","gender":"Prefer not to respond","age":77,"state":"Michigan","children":[]})
+db.people.insertOne({"first_name":"Michael","last_name":"Jackson","email":"MJinNeverland@gmail.com","gender":"Who knows","age":63,"state":"California","children":[{name:"Prince",age:25}, {name:"Paris",age:24}]})
+db.people.updateOne({first_name:"Clarence"},{$set: {state:"South Dakota"}})
+db.people.updateOne({first_name:"Rebecca"},{$unset: {email:1}})
+db.people.updateMany({state:"Missouri"},{$inc: {age:1}})
+db.people.replaceOne({_id:ObjectId("62aa84443de9c58e6d79ced1")},{first_name:"Jerry",last_name:"Baker-Mendez",email:"jerry@classic.ly",gender:"Male",age:28,state:"Vermont",children:[{name:"alan",age:18},{name:"Jenny",age:3}]})
+db.people.deleteOne({first_name:"Wanda",last_name:"Bowman"})
+db.people.deleteMany({email:null})
+
+In submissions collection:
+db.submissions.insertMany([
+{"title":"The River Bend","upvotes":10,"downvotes":2,"artist":"<ID of Anna Howard>"},
+{"title":"Nine Lives","upvotes":7,"downvotes":0,"artist":"<ID of Scott Henderson>"},
+{"title":"Star Bright","upvotes":19,"downVotes":3,"artist":"<ID of Andrea Burke>"},
+{"title":"Why Like This?","upvotes":1,"downVotes":5,"artist":"<ID of Steven Marshall>"},
+{"title":"Non Sequitur","upvotes":11,"downVotes":1,"artist":"<ID of Gerald Bailey>"}])
+
+db.submissions.updateOne({title:"The River Bend"},{$inc: {upvotes:2}})
+db.submissions.updateMany({upvotes: {$gte:10}}, {$set: {"round2":true}})
+
+Extended Challenges:
+db.people.updateOne({first_name:"Helen"}, {$push: {children: [{name:"Melanie",age:0}]}})
+db.people.updateOne({first_name:"Joan","children.name":"Catherine","children.age":19}, {$set: {"children.$.name":"Cat"}, $inc: {"children.$.age": 1}})
+db.submissions.find({$where: "this.downvotes > this.upvotes"})
